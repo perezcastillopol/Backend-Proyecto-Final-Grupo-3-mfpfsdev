@@ -1,2 +1,91 @@
 @baseUrl = http://localhost:3000/api
 GET {{baseUrl}}/users
+
+###
+
+GET {{baseUrl}}/users/7
+
+###
+
+PUT {{baseUrl}}/users/7
+Content-Type: application/json
+
+{
+  "name": "Angela Vilela",
+  "email": "angela@example.com",
+  "password_hash": "hash123",
+  "photo_url": null,
+  "bio": "Amante de los animales",
+  "interests":null
+}
+
+##########################################################################################
+GET {{baseUrl}}/trips
+###
+GET {{baseUrl}}/trips/19
+
+###
+GET {{baseUrl}}/trips/user/1
+
+###
+GET {{baseUrl}}/trips/modality/2
+
+###
+GET {{baseUrl}}/trips/filter
+Content-Type: application/json
+
+{
+  "title": "AlcaláPH",
+  "start_date": "2026-03-26",
+  "status": "published",
+  "modality_trip_id": 2
+}
+
+
+
+#############################################################################################
+POST {{baseUrl}}/trips/
+Content-Type: application/json
+
+{
+  "creator_id": 1,
+  "title": "AlcaláPH",
+  "description": "Visita a la Magistral",
+  "start_date": "2026-03-26",
+  "end_date": "2026-03-26",
+  "cost_per_person": "50.00",
+  "min_participants": 2,
+  "max_participants": 8,
+  "location": "Alcalá de Henares",
+  "transport": "A pie",
+  "itinerary": "Calles y monumentos",
+  "status": "published",
+  "modality_trip_id": 2
+}
+
+###
+PUT {{baseUrl}}/trips/2
+Content-Type: application/json
+
+{
+  "creator_id": 3,
+  "title": "AlcaláPH",
+  "description": "Visita a la Magistral",
+  "start_date": "2026-03-26",
+  "end_date": "2026-03-26",
+  "cost_per_person": "50.00",
+  "min_participants": 2,
+  "max_participants": 8,
+  "location": "Alcalá de Henares",
+  "transport": "A pie",
+  "itinerary": "Calles y monumentos",
+  "status": "published",
+  "modality_trip_id": 3
+  }
+
+###
+DELETE {{baseUrl}}/trips/1
+
+#############################################################################################
+
+GET {{baseUrl}}/modality
