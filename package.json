@@ -1,0 +1,24 @@
+{
+  "name": "backend-proyecto-final-grupo-3-mfpfsdev",
+  "version": "1.0.0",
+  "description": "------------------------------------------------------------------------",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perezcastillopol/Backend-Proyecto-Final-Grupo-3-mfpfsdev.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/perezcastillopol/Backend-Proyecto-Final-Grupo-3-mfpfsdev/issues"
+  },
+  "homepage": "https://github.com/perezcastillopol/Backend-Proyecto-Final-Grupo-3-mfpfsdev#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
