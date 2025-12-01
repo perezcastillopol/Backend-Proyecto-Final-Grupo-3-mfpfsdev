@@ -15,20 +15,20 @@ import {
 const router = Router();
 
 router.post(
-    "/:tripId/reviews",
+    "/",
     authenticate,
     validateReviewPayload,
     createReview
 );
 
 router.get(
-    "/:tripId/reviews",
+    "/trip/:tripId",
     authenticate,
     getTripReviews
 );
 
 router.put(
-    "/:tripId/reviews/:reviewId",
+    "/:reviewId",
     authenticate,
     ensureReviewExists,
     validateReviewPayload,
@@ -36,7 +36,7 @@ router.put(
 );
 
 router.delete(
-    "/:tripId/reviews/:reviewId",
+    "/:reviewId",
     authenticate,
     ensureReviewExists,
     deleteReview

@@ -9,8 +9,7 @@ import {
 export const createReview = async (req, res) => {
   try {
     const reviewerId = req.userId;
-    const tripId = Number(req.params.tripId);
-    const { reviewee_id, rating, comment } = req.body;
+    const { tripId, reviewee_id, rating, comment } = req.body;
 
     if (reviewerId === reviewee_id) {
       return res.status(400).json({ message: "te estás valorando a ti mismo" });
