@@ -18,6 +18,18 @@ Content-Type: application/json
   "bio": "Amante de los animales",
   "interests":null
 }
+###
+POST {{baseUrl}}/users/
+Content-Type: application/json
+
+{
+  "name": "Angela Vilela",
+  "email": "vilela@example.com",
+  "password_hash": "hash123",
+  "photo_url": null,
+  "bio": "Amante de los animales",
+  "interests":null
+}
 
 ##########################################################################################
 GET {{baseUrl}}/trips
