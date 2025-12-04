@@ -46,11 +46,11 @@ export const insertUser = async ({
 
 export const update = async (
   userId,
-  { name, email, password_hash, photo_url, bio, interests }
+  { name, email, password_hash, photo_url, bio, interests, birthDate, phone, location}
 ) => {
   const [result] = await db.query(
-    'update users set name = ?, email = ?, password_hash = ?, photo_url = ?, bio = ?, interests = ? where id = ?',
-    [name, email, password_hash, photo_url, bio, interests, userId]
+    'update users set name = ?, email = ?, password_hash = ?, photo_url = ?, bio = ?, interests = ?,  birthDate = ?, phone = ?, location = ? where id = ?',
+    [name, email, password_hash, photo_url, bio, interests, userId, birthDate, phone, location]
   );
   return result;
 };
