@@ -33,11 +33,13 @@ export const insertUser = async ({
   interests,
   birthDate, 
   phone, 
-  location
+  location, 
+  nickname, 
+  last_name
 }) => {
   const [result] = await db.query(
-    'insert into users (name, email, password_hash, photo_url, bio, interests, birthDate, phone, location) values (?,?,?,?,?,?,?,?,?)',
-    [name, email, password_hash, photo_url, bio, interests,birthDate, phone, location]
+    'insert into users (name, email, password_hash, photo_url, bio, interests, birthDate, phone, location, nickname, last_name) values (?,?,?,?,?,?,?,?,?,?,?)',
+    [name, email, password_hash, photo_url, bio, interests, birthDate, phone, location, nickname, last_name]
   );
   return result;
 };
@@ -46,11 +48,11 @@ export const insertUser = async ({
 
 export const update = async (
   userId,
-  { name, email, password_hash, photo_url, bio, interests, birthDate, phone, location}
+  { name, email, password_hash, photo_url, bio, interests, birthDate, phone, location, last_name}
 ) => {
   const [result] = await db.query(
-    'update users set name = ?, email = ?, password_hash = ?, photo_url = ?, bio = ?, interests = ?,  birthDate = ?, phone = ?, location = ? where id = ?',
-    [name, email, password_hash, photo_url, bio, interests, userId, birthDate, phone, location]
+    'update users set name = ?, email = ?, password_hash = ?, photo_url = ?, bio = ?, interests = ?,  birthDate = ?, phone = ?, location = ?, last_name = ? where id = ?',
+    [name, email, password_hash, photo_url, bio, interests, userId, birthDate, phone, location, last_name]
   );
   return result;
 };
