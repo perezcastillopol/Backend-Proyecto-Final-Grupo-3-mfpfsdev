@@ -46,3 +46,11 @@ Base URL: `http://localhost:3000/api`
 
 - GET /api/modality - Listar todas las modalidades
 - GET /api/modality/:modalityId - Obtener una modalidad por id
+
+
+##TRIP REQUESTS## 
+
+POST http://localhost:3000/api/trips/:tripId/invitations - Crear invitación
+GET http://localhost:3000/api/trips/:tripId/invitations - Obtener invitaciones
+PUT http://localhost:3000/api/trips/:tripId/invitations/:invitationId - Responder a invitación
+GET http://localhost:3000/api/trips/:tripId/invitations/history - Obtener historial
