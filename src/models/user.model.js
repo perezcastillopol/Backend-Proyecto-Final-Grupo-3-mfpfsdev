@@ -31,10 +31,13 @@ export const insertUser = async ({
   photo_url,
   bio,
   interests,
+  birthDate, 
+  phone, 
+  location
 }) => {
   const [result] = await db.query(
-    'insert into users (name, email, password_hash, photo_url, bio, interests) values (?,?,?,?,?,?)',
-    [name, email, password_hash, photo_url, bio, interests]
+    'insert into users (name, email, password_hash, photo_url, bio, interests, birthDate, phone, location) values (?,?,?,?,?,?,?,?,?)',
+    [name, email, password_hash, photo_url, bio, interests,birthDate, phone, location]
   );
   return result;
 };
