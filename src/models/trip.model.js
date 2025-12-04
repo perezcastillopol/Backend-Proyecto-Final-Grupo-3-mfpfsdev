@@ -73,8 +73,8 @@ export const selectFilterTrips = async ({creator_id, title, modality_trip_id, st
 
 /***********************************************************INSERT*************************************/
 
-export const insertTrip = async({creator_id, title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id})=>{
-    const [result] = await db.query ('insert into trips (creator_id, title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id)values (?,?,?,?,?,?,?,?,?,?,?,?,?)',[creator_id, title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id]);
+export const insertTrip = async({creator_id, title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id, photo_url, num_participants})=>{
+    const [result] = await db.query ('insert into trips (creator_id, title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id, photo_url, num_participants)values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[creator_id, title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id,photo_url, num_participants]);
     return result;
 }
 /***********************************************************DELETE****************************************/
@@ -85,7 +85,7 @@ export const deleteById = async (tripId) =>{
 }
 /***********************************************************UPDATE****************************************/
 
-export const update = async (tripId, {title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id}) => {
-    const [result] = await db.query('update trips set title = ?, description = ?, start_date= ?, end_date = ?, cost_per_person = ?, min_participants = ?, max_participants = ?, location = ?, transport= ?, itinerary = ?, status =?, modality_trip_id =? where id = ?', [title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id, tripId]);
+export const update = async (tripId, {title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id, photo_url, num_participants}) => {
+    const [result] = await db.query('update trips set title = ?, description = ?, start_date= ?, end_date = ?, cost_per_person = ?, min_participants = ?, max_participants = ?, location = ?, transport= ?, itinerary = ?, status =?, modality_trip_id =?,  photo_url=?, num_participants=? where id = ?', [title, description, start_date, end_date, cost_per_person, min_participants, max_participants, location, transport, itinerary, status, modality_trip_id, tripId, photo_url, num_participants]);
     return result;                                                                                                                                                                                                      
 }

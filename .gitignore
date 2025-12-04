@@ -1,3 +1,11 @@
-node_modules
+# Ignorar variables de entorno
+.env
+
+# Ignorar dependencias
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
 
 .idea
