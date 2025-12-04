@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import unless from 'express-unless';
 
 export const authenticate = (req, res, next) => {
     const header = req.headers.authorization;
@@ -12,3 +13,5 @@ export const authenticate = (req, res, next) => {
         return res.status(401).json({ message: 'Invalid token' });
     }
 };
+
+authenticate.unless = unless;

@@ -16,20 +16,17 @@ const router = Router();
 
 router.post(
     "/",
-    authenticate,
     validateReviewPayload,
     createReview
 );
 
 router.get(
     "/trip/:tripId",
-    authenticate,
     getTripReviews
 );
 
 router.put(
     "/:reviewId",
-    authenticate,
     ensureReviewExists,
     validateReviewPayload,
     updateReview
@@ -37,7 +34,6 @@ router.put(
 
 router.delete(
     "/:reviewId",
-    authenticate,
     ensureReviewExists,
     deleteReview
 );

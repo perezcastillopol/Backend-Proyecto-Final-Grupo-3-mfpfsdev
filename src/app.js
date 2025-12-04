@@ -2,15 +2,20 @@
 import express from 'express';
 import cors from 'cors';
 
+import apiRoutes from './routes/api.routes.js';
+import {authenticate} from "./middlewares/auth.middlewares.js";
+
 const app = express();
 app.use(express.json());
 
-
-// Route configuration
-// Example:
 app.use(cors());
-import apiRoutes from './routes/api.routes.js';
-app.use('/api', apiRoutes);
+
+app.use('/api',
+    authenticate.unless({
+      path: [
+        { url: 'api/auth/login', method: ['POST'] }
+      ]
+    }), apiRoutes);
 
 
 // 404 handler
