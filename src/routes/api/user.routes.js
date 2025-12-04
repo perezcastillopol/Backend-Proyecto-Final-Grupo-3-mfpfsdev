@@ -4,7 +4,6 @@ import {
   getAllUsers,
   getUserById,
   updateUser,
-  loginUser,
 } from '../../controllers/user.controller.js';
 import { checkIdUser } from '../../middlewares/users.middlewares.js';
 
@@ -12,9 +11,6 @@ const router = Router();
 
 // Listar usuarios
 router.get('/', getAllUsers);
-
-// LOGIN (antes de :userId para que no lo confunda con un id)
-router.post('/login', loginUser);
 
 // Obtener usuario por id
 router.get('/:userId', checkIdUser, getUserById);
