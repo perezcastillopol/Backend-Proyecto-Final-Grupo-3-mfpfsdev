@@ -5,7 +5,7 @@ export const createInvitation = async (req, res) => {
     const { tripId } = req.params;
     const { userId, note } = req.body;
     try {
-        // Check if user already has a pending or accepted invitation
+        // Chequea si ya existe una invitación pendiente o aceptada
         const existing = await TripInvitation.findByUserAndTrip(
             tripId,
             userId,
@@ -16,7 +16,7 @@ export const createInvitation = async (req, res) => {
                 error: 'Ya tienes una invitación pendiente o aceptada para este viaje'
             });
         }
-        // Create the invitation
+        // Crea la invitación
         const invitation = await TripInvitation.create(tripId, userId, note);
         res.status(201).json(invitation);
     } catch (error) {
@@ -39,7 +39,7 @@ export const getInvitations = async (req, res) => {
 export const respondToInvitation = async (req, res) => {
     const { tripId, invitationId } = req.params;
     const { status, responderId } = req.body;
-    // Validate status
+    // Validación
     if (!['accepted', 'rejected'].includes(status)) {
         return res.status(400).json({
             error: 'Estado inválido. Debe ser "accepted" o "rejected"'
@@ -66,7 +66,7 @@ export const getInvitationHistory = async (req, res) => {
         const invitations = await TripInvitation.getHistory(tripId);
         res.json(invitations);
     } catch (error) {
-        console.error('Error fetching invitation history:', error);
-        res.status(500).json({ error: 'Error al obtener el historial de invitaciones' });
+        console.error('Error intentando conseguir el historial:', error);
+        res.status(500).json({ error: 'Error intentando conseguir el historial' });
     }
 };
