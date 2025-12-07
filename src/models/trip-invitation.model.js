@@ -1,5 +1,5 @@
 
-import db from '../../config/db.js'; 
+import db from '../config/db.js'; 
 
 export const findByUserAndTrip = async (tripId, userId, statuses = []) => {
     let query = 'SELECT * FROM trip_requests WHERE trip_id = ? AND user_id = ?';
