@@ -5,7 +5,7 @@ import {
   getUserById,
   updateUser,
 } from '../../controllers/user.controller.js';
-import { checkIdUser } from '../../middlewares/users.middlewares.js';
+import { checkIdUser, getNickName, hashPassword } from '../../middlewares/users.middlewares.js';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.get('/', getAllUsers);
 router.get('/:userId', checkIdUser, getUserById);
 
 // Crear usuario
-router.post('/', createUser);
+router.post('/', getNickName, hashPassword, createUser);
 
 // Actualizar usuario
 router.put('/:userId', checkIdUser, updateUser);
