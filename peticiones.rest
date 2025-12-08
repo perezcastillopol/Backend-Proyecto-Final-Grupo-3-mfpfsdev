@@ -3,32 +3,40 @@ GET {{baseUrl}}/users
 
 ###
 
-GET {{baseUrl}}/users/7
+GET {{baseUrl}}/users/6
 
 ###
 
-PUT {{baseUrl}}/users/7
+PUT {{baseUrl}}/users/6
 Content-Type: application/json
 
 {
-  "name": "Angela Vilela",
-  "email": "angela@example.com",
+  "name": "Marta",
+  "last_name": "Orozco",
+  "email": "e2maihl@example.com",
   "password_hash": "hash123",
   "photo_url": null,
   "bio": "Amante de los animales",
-  "interests":null
+  "interests":[{"id": 15, "name": "Playa"}],
+  "phone":"878787878",
+  "location":"Madrid", 
+  "birthDate":"2010/05/05"
 }
 ###
 POST {{baseUrl}}/users/
 Content-Type: application/json
 
 {
-  "name": "Angela Vilela",
-  "email": "vilela@example.com",
+  "name": "Marcos",
+  "last_name":"Lopez",
+  "email": "edgeea@example.com",
   "password_hash": "hash123",
   "photo_url": null,
   "bio": "Amante de los animales",
-  "interests":null
+  "interests":[{"id": 12, "name": "Playa"}],
+  "phone":"878787878",
+  "location":"Madrid", 
+  "birthDate":"2010/05/05"
 }
 
 ##########################################################################################
