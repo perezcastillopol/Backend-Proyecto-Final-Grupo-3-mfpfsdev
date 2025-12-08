@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import {selectUserByEmail} from "../models/user.model.js";
+import {insertModalityUser, insertUser, selectUserByEmail, selectUserById} from "../models/user.model.js";
 
 /***********************************************************LOGIN****************************************/
 
@@ -52,5 +52,34 @@ export const loginUser = async (req, res) => {
   } catch (error) {
     console.error('Error en loginUser:', error);
     return res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
+
+export const register = async (req, res) => {
+  try {
+    const { insertId } = await insertUser(req.body);
+    const { interests } = req.body;
+    if (Array.isArray(interests)) {
+      for (const i of interests) {
+        const { id } = i;
+        await insertModalityUser({ users_id: insertId, id });
+      }
+    }
+    const result = await selectUserById(insertId);
+    return res.json(result);
+
+  } catch (error) {
+    if (error.status) {
+      return res.status(error.status).json({ message: error.message });
+    }
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(400).json({
+        message: "El email ya existe en nuestra base de datos"
+      });
+    }
+    console.error(error);
+    return res.status(500).json({
+      message: "Error en el servidor"
+    });
   }
 };

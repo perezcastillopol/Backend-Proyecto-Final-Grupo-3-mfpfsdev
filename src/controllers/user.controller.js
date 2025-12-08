@@ -1,13 +1,10 @@
 import {
-  insertUser,
+  deleteModalityUser,
+  getModalitiesByUser,
+  insertModalityUser,
   selectAllUsers,
   selectUserById,
   update
-  update,
-  selectUserByEmail,
-  insertModalityUser,
-  deleteModalityUser,
-  getModalitiesByUser
 } from '../models/user.model.js';
 
 /***********************************************************GET****************************************/
@@ -26,36 +23,6 @@ export const getUserById = async (req, res) => {
   res.json(req.user);
 };
 
-/***********************************************************INSERT*************************************/
-
-export const createUser = async (req, res) => {
-  try {
-    const { insertId } = await insertUser(req.body);
-    const { interests } = req.body;
-    if (Array.isArray(interests)) {
-      for (const i of interests) {
-        const { id } = i;
-        await insertModalityUser({ users_id: insertId, id });
-      }
-    }
-    const result = await selectUserById(insertId);
-    return res.json(result);
-
-  } catch (error) {
-    if (error.status) {
-      return res.status(error.status).json({ message: error.message });
-    }
-    if (error.code === "ER_DUP_ENTRY") {
-      return res.status(400).json({
-        message: "El email ya existe en nuestra base de datos"
-      });
-    }
-    console.error(error);
-    return res.status(500).json({
-      message: "Error en el servidor"
-    });
-  }
-};
 /***********************************************************UPDATE****************************************/
 
 export const updateUser = async (req, res) => {

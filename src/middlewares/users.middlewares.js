@@ -1,6 +1,4 @@
 import {selectUserById} from '../models/user.model.js';
-import bcrypt from 'bcryptjs';
-const BCRYPT_ROUNDS = 10;
 
 export const checkIdUser = async (req, res, next) => {
     const {userId} = req.params;
@@ -30,18 +28,4 @@ export const getNickName = async (req, res, next) => {
 
     req.body.nickname = nickname;
     next();
-}
-
-export const hashPassword = async (req, res, next) =>{
-    try {
-        const { password_hash } = req.body;
-        if (!password_hash) return next();
-        const hash = await bcrypt.hash(password_hash, BCRYPT_ROUNDS);
-        req.body.password_hash = hash;
-        next();
-    } catch (err) {
-        console.error('Error hashing password:', err);
-        return res.status(500).json({ message: 'Error processing password' });
-    }
-
 }

@@ -1,11 +1,6 @@
-import { Router } from 'express';
-import {
-  createUser,
-  getAllUsers,
-  getUserById,
-  updateUser,
-} from '../../controllers/user.controller.js';
-import { checkIdUser, getNickName, hashPassword } from '../../middlewares/users.middlewares.js';
+import {Router} from 'express';
+import {getAllUsers, getUserById, updateUser,} from '../../controllers/user.controller.js';
+import {checkIdUser} from '../../middlewares/users.middlewares.js';
 
 const router = Router();
 
@@ -14,9 +9,6 @@ router.get('/', getAllUsers);
 
 // Obtener usuario por id
 router.get('/:userId', checkIdUser, getUserById);
-
-// Crear usuario
-router.post('/', getNickName, hashPassword, createUser);
 
 // Actualizar usuario
 router.put('/:userId', checkIdUser, updateUser);

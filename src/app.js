@@ -13,7 +13,8 @@ app.use(cors());
 app.use('/api',
     authenticate.unless({
       path: [
-        { url: 'api/auth/login', method: ['POST'] }
+        { url: 'api/auth/login', methods: ['POST'] },
+        { url: 'api/auth/register', methods: ['POST'] },
       ]
     }), apiRoutes);
 
