@@ -1,44 +1,48 @@
 
-import * as TripInvitation from '../models/trip-invitation.model.js';
+import * as TripRequest from '../models/trip-invitation.model.js';
 
-export const createInvitation = async (req, res) => {
+export const createRequest = async (req, res) => {
     const { tripId } = req.params;
-    const { userId, note } = req.body;
+    const { note } = req.body;
+    const userId = req.userId; // El usuario autenticado es quien hace la solicitud
+
     try {
-        // Chequea si ya existe una invitación pendiente o aceptada
-        const existing = await TripInvitation.findByUserAndTrip(
+        // Chequea si ya existe una solicitud pendiente o aceptada
+        const existing = await TripRequest.findByUserAndTrip(
             tripId,
             userId,
             ['pending', 'accepted']
         );
         if (existing.length > 0) {
             return res.status(400).json({
-                error: 'Ya tienes una invitación pendiente o aceptada para este viaje'
+                error: 'Ya tienes una solicitud pendiente o aceptada para este viaje'
             });
         }
-        // Crea la invitación
-        const invitation = await TripInvitation.create(tripId, userId, note);
-        res.status(201).json(invitation);
+        // Crea la solicitud
+        const request = await TripRequest.create(tripId, userId, note);
+        res.status(201).json(request);
     } catch (error) {
-        console.error('Error creating invitation:', error);
-        res.status(500).json({ error: 'Error al crear la invitación' });
+        console.error('Error creating request:', error);
+        res.status(500).json({ error: 'Error al crear la solicitud' });
     }
 };
 
-export const getInvitations = async (req, res) => {
+export const getRequests = async (req, res) => {
     const { tripId } = req.params;
     try {
-        const invitations = await TripInvitation.findByTripId(tripId);
-        res.json(invitations);
+        const requests = await TripRequest.findByTripId(tripId);
+        res.json(requests);
     } catch (error) {
-        console.error('Error fetching invitations:', error);
-        res.status(500).json({ error: 'Error al obtener las invitaciones' });
+        console.error('Error fetching requests:', error);
+        res.status(500).json({ error: 'Error al obtener las solicitudes' });
     }
 };
 
-export const respondToInvitation = async (req, res) => {
-    const { tripId, invitationId } = req.params;
-    const { status, responderId } = req.body;
+export const respondToRequest = async (req, res) => {
+    const { tripId, requestId } = req.params;
+    const { status } = req.body;
+    const responderId = req.userId; // El usuario autenticado es quien responde (debe ser el creador del viaje)
+
     // Validación
     if (!['accepted', 'rejected'].includes(status)) {
         return res.status(400).json({
@@ -46,25 +50,24 @@ export const respondToInvitation = async (req, res) => {
         });
     }
     try {
-
-        const invitation = await TripInvitation.findByIdAndTrip(invitationId, tripId);
-        if (!invitation) {
-            return res.status(404).json({ error: 'Invitación no encontrada' });
+        const request = await TripRequest.findByIdAndTrip(requestId, tripId);
+        if (!request) {
+            return res.status(404).json({ error: 'Solicitud no encontrada' });
         }
-        // Update the invitation
-        const updated = await TripInvitation.updateStatus(invitationId, status, responderId);
+        // Actualiza la solicitud
+        const updated = await TripRequest.updateStatus(requestId, status, responderId);
         res.json(updated);
     } catch (error) {
-        console.error('Error responding to invitation:', error);
-        res.status(500).json({ error: 'Error al responder a la invitación' });
+        console.error('Error responding to request:', error);
+        res.status(500).json({ error: 'Error al responder a la solicitud' });
     }
 };
 
-export const getInvitationHistory = async (req, res) => {
+export const getRequestHistory = async (req, res) => {
     const { tripId } = req.params;
     try {
-        const invitations = await TripInvitation.getHistory(tripId);
-        res.json(invitations);
+        const requests = await TripRequest.getHistory(tripId);
+        res.json(requests);
     } catch (error) {
         console.error('Error intentando conseguir el historial:', error);
         res.status(500).json({ error: 'Error intentando conseguir el historial' });

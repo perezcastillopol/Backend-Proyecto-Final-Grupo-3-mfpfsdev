@@ -1,17 +1,20 @@
 import express from 'express';
+import * as tripRequestController from '../../controllers/trip-invitation.controller.js';
 import * as tripInvitationController from '../../controllers/trip-invitation.controller.js';
 import {authenticate} from "../../middlewares/auth.middlewares.js";
 
 const router = express.Router();
 
-router.get('/trips/:tripId/invitations', tripInvitationController.getInvitations);
+// Usuario solicita unirse a un viaje
+router.post('/trips/:tripId/requests', tripRequestController.createRequest);
 
-router.get('/trips/:tripId/invitations/history', tripInvitationController.getInvitationHistory);
+// Ver todas las solicitudes para un viaje
+router.get('/trips/:tripId/requests', tripRequestController.getRequests);
 
-router.use(authenticate)
+// Responder a una solicitud (aceptar/rechazar)
+router.put('/trips/:tripId/requests/:requestId', tripRequestController.respondToRequest);
 
-router.put('/trips/:tripId/invitations/:invitationId', tripInvitationController.respondToInvitation);
-
-router.post('/trips/:tripId/invitations', tripInvitationController.createInvitation);
+// Ver historial de solicitudes
+router.get('/trips/:tripId/requests/history', tripRequestController.getRequestHistory);
 
 export default router;
