@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import unless from 'express-unless';
 import bcrypt from "bcryptjs";
 import dotenv from 'dotenv';
 
@@ -32,5 +31,3 @@ export const authenticate = (req, res, next) => {
         return res.status(401).json({ message: 'Invalid token' });
     }
 };
-
-authenticate.unless = unless;

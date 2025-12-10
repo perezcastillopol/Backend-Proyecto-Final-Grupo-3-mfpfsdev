@@ -10,13 +10,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use('/api',
-    authenticate.unless({
-      path: [
-        { url: 'api/auth/login', methods: ['POST'] },
-        { url: 'api/auth/register', methods: ['POST'] },
-      ]
-    }), apiRoutes);
+app.use('/api', apiRoutes);
 
 
 // 404 handler

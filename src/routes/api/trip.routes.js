@@ -3,6 +3,7 @@ import {getAllTrips, getTripById, createTrip, removeTrip, updateTrip, getTripsBy
 import { checkId } from '../../middlewares/trips.middlewares.js';
 import { checkIdUser } from '../../middlewares/users.middlewares.js';
 import { checkIdModality } from '../../middlewares/modality.middlewares.js';
+import {authenticate} from "../../middlewares/auth.middlewares.js";
 
 
 const router = Router();
@@ -13,6 +14,7 @@ router.get('/modality/:modalityId',checkIdModality, getTripsByModality);
 router.get('/filter', getFiltredTrips)
 router.get('/:tripId', checkId, getTripById);
 
+router.use(authenticate)
 
 
 router.post('/', createTrip);
