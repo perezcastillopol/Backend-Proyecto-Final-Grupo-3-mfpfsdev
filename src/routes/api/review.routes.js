@@ -14,15 +14,17 @@ import {
 
 const router = Router();
 
+router.get(
+    "/trip/:tripId",
+    getTripReviews
+);
+
+router.use(authenticate)
+
 router.post(
     "/",
     validateReviewPayload,
     createReview
-);
-
-router.get(
-    "/trip/:tripId",
-    getTripReviews
 );
 
 router.put(
