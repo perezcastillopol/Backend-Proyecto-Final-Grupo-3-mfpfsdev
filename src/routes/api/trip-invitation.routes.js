@@ -1,14 +1,18 @@
 import express from 'express';
-import * as tripInvitationController from '../../controllers/trip-invitation.controller.js';
+import * as tripRequestController from '../../controllers/trip-invitation.controller.js';
 
 const router = express.Router();
 
-router.post('/trips/:tripId/invitations', tripInvitationController.createInvitation);
+// Usuario solicita unirse a un viaje
+router.post('/trips/:tripId/requests', tripRequestController.createRequest);
 
-router.get('/trips/:tripId/invitations', tripInvitationController.getInvitations);
+// Ver todas las solicitudes para un viaje
+router.get('/trips/:tripId/requests', tripRequestController.getRequests);
 
-router.put('/trips/:tripId/invitations/:invitationId', tripInvitationController.respondToInvitation);
+// Responder a una solicitud (aceptar/rechazar)
+router.put('/trips/:tripId/requests/:requestId', tripRequestController.respondToRequest);
 
-router.get('/trips/:tripId/invitations/history', tripInvitationController.getInvitationHistory);
+// Ver historial de solicitudes
+router.get('/trips/:tripId/requests/history', tripRequestController.getRequestHistory);
 
 export default router;

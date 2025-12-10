@@ -18,6 +18,6 @@ router.use(authenticate)
 router.use('/users', apiUser);
 router.use('/modality', apiModality);
 router.use('/reviews', apiReviews);
-router.use('/api', tripInvitationRoutes);
+router.use('/', tripInvitationRoutes);
 
 export default router;
