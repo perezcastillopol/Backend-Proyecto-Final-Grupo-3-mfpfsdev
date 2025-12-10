@@ -29,7 +29,6 @@ export const getTripsByModality = async (req, res) =>{
 }
 
 export const getFiltredTrips = async (req, res) =>{
-  console.log(req.body)
   const result = await selectFilterTrips(req.body);
   res.json(result);
 }

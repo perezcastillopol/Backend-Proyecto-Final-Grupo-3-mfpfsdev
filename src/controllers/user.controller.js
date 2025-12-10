@@ -18,7 +18,6 @@ export const getUserById = async (req, res) => {
   const { userId } = req.params;
   const mods = await getModalitiesByUser(userId);
   req.user.interests = mods;
-  console.log('esto recupero: ',mods)
   // checkIdUser ya mete el usuario en req.user
   res.json(req.user);
 };
@@ -37,5 +36,7 @@ export const updateUser = async (req, res) => {
       }
   }
   const result = await selectUserById(userId);
+  const mods = await getModalitiesByUser(userId);
+  result.interests = mods;
   res.json(result);
 };

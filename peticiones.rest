@@ -3,7 +3,7 @@ GET {{baseUrl}}/users
 
 ###
 
-GET {{baseUrl}}/users/6
+GET {{baseUrl}}/users/22
 
 ###
 
@@ -13,7 +13,7 @@ Content-Type: application/json
 {
   "name": "Marta",
   "last_name": "Orozco",
-  "email": "e2maihl@example.com",
+  "email": "e2mafihl@example.com",
   "password_hash": "hash123",
   "photo_url": null,
   "bio": "Amante de los animales",
@@ -42,7 +42,7 @@ Content-Type: application/json
 ##########################################################################################
 GET {{baseUrl}}/trips
 ###
-GET {{baseUrl}}/trips/19
+GET {{baseUrl}}/trips/2
 
 ###
 GET {{baseUrl}}/trips/user/1
@@ -109,3 +109,6 @@ DELETE {{baseUrl}}/trips/1
 #############################################################################################
 
 GET {{baseUrl}}/modality
+###
+
+GET {{baseUrl}}/modality/1

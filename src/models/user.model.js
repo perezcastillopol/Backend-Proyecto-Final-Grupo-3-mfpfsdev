@@ -63,7 +63,9 @@ export const deleteModalityUser = async (users_id) => {
 }
 
 export const getModalitiesByUser = async (userId) => {
-  const [result] = await db.query('select * from user_modality where users_id = ?', [userId]);
+  const [result] = await db.query('select mt.id, mt.name from user_modality um join modality mt ON um.modality_trip_id = mt.id where um.users_id = ?', 
+    [userId]
+  );
   if (result.length === 0) return null;
   return result;
 }

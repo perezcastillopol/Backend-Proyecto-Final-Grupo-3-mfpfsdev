@@ -64,7 +64,6 @@ export const selectFilterTrips = async ({creator_id, title, modality_trip_id, st
             params.push(end_date);
         }
     }
-    console.log(sql,params)
     const [result] = await db.query(sql, params);
     return result;
 }
