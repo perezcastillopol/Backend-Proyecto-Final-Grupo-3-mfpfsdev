@@ -1,4 +1,3 @@
-
 import db from '../../config/db.js'; 
 
 export const findByUserAndTrip = async (tripId, userId, statuses = []) => {
@@ -15,8 +14,8 @@ export const findByUserAndTrip = async (tripId, userId, statuses = []) => {
 
 export const create = async (tripId, userId, note = null) => {
     const [result] = await db.query(
-        'INSERT INTO trip_requests (trip_id, user_id, note, requested_at, status) VALUES (?, ?, ?, NOW(), "pending")',
-        [tripId, userId, note]
+        'INSERT INTO trip_requests (trip_id, user_id, note, requested_at, status) VALUES (?, ?, ?, NOW(), ?)',
+        [tripId, userId, note, 'pending']
     );
     return await findById(result.insertId);
 };

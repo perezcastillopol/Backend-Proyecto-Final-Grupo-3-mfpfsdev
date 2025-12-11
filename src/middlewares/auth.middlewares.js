@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const BCRYPT_ROUNDS = process.env.BCRYPT_ROUNDS || 10;
+const BCRYPT_ROUNDS = parseInt(process.env.BCRYPT_ROUNDS) || 10;
 
 export const hashPassword = async (req, res, next) =>{
     try {

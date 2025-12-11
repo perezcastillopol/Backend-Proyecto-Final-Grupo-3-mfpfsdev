@@ -1,5 +1,4 @@
-
-import * as TripRequest from '../models/trip-invitation.model.js';
+import * as TripRequest from '../models/trip-request.model.js';
 
 export const createRequest = async (req, res) => {
     const { tripId } = req.params;
