@@ -8,11 +8,10 @@ export const insertReviewTransactional = async (tripId, reviewerId, revieweeId, 
     try {
         await conn.beginTransaction();
 
-        const tripRows = await selectTripById(tripId);
-        if (!tripRows.length) {
+        const trip = await selectTripById(tripId);
+        if (!trip) {
             throw { status: 404, message: "Trip no encontrado" };
         }
-        const trip = tripRows[0];
 
         const now = new Date();
         const tripEnded = trip.status === "closed" || (trip.end_date && new Date(trip.end_date) < now);
@@ -21,7 +20,7 @@ export const insertReviewTransactional = async (tripId, reviewerId, revieweeId, 
         }
 
         const parts = await selectUsersAcceptedTripReview(tripId, reviewerId, revieweeId);
-        if (parts.length < 2) {
+        if (!parts || parts.length < 2) {
             throw { status: 403, message: "Ambos usuarios deben ser participantes aceptados del viaje" };
         }
 
