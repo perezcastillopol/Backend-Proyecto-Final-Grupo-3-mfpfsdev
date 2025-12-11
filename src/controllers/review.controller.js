@@ -9,13 +9,18 @@ import {
 export const createReview = async (req, res) => {
   try {
     const reviewerId = req.userId;
-    const { tripId, reviewee_id, rating, comment } = req.body;
+    const { tripId, trip_id, reviewee_id, rating, comment } = req.body;
+    const normalizedTripId = Number(tripId ?? trip_id);
+
+    if (!Number.isInteger(normalizedTripId)) {
+      return res.status(400).json({ message: "trip_id debe ser un número" });
+    }
 
     if (reviewerId === reviewee_id) {
       return res.status(400).json({ message: "te estás valorando a ti mismo" });
     }
 
-    const result = await insertReviewTransactional(tripId, reviewerId, reviewee_id, rating, comment || null);
+    const result = await insertReviewTransactional(normalizedTripId, reviewerId, reviewee_id, rating, comment || null);
 
     return res.status(201).json({ id: result.insertId });
   } catch (err) {

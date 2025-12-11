@@ -1,5 +1,6 @@
 import { selectAllTrips, selectTripById, insertTrip, deleteById, update, selectTripsByUserId, selectTripsByModality, selectFilterTrips} from '../models/trip.model.js';
 
+
 export const getAllTrips = async (req, res) => {
   const trips = await selectAllTrips();
   res.json(trips);
@@ -8,6 +9,7 @@ export const getAllTrips = async (req, res) => {
 export const getTripById = async (req, res) =>{
   res.json(req.trip)
 }
+
 
 export const getTripsByUserCreator = async (req, res) => {
   const {userId} = req.params;
