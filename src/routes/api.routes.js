@@ -7,6 +7,7 @@ import apiReviews from "./api/review.routes.js";
 import authRoutes from "./api/auth.routes.js";
 import tripInvitationRoutes from "./api/trip-invitation.routes.js";
 import participantsroutes from "./api/participants.routes.js";
+import apiTripRequest from "./api/trip-requests.routes.js";
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.use('/modality', apiModality);
 router.use('/reviews', apiReviews);
 router.use('/participants', participantsroutes);
 router.use('/', tripInvitationRoutes);
+router.use('/trip-requests', apiTripRequest);
 
 
 export default router;

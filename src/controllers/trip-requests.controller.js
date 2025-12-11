@@ -1,5 +1,4 @@
-
-import * as TripRequest from '../models/trip-invitation.model.js';
+import * as TripRequest from '../models/trip-requests.model.js';
 
 export const createRequest = async (req, res) => {
     const { tripId } = req.params;
@@ -71,5 +70,19 @@ export const getRequestHistory = async (req, res) => {
     } catch (error) {
         console.error('Error intentando conseguir el historial:', error);
         res.status(500).json({ error: 'Error intentando conseguir el historial' });
+    }
+};
+
+export const getMyRequest = async (req, res) => {
+    const { tripId } = req.params;
+    const userId = req.userId; // El usuario autenticado
+    try {
+        const requests = await TripRequest.findByUserAndTrip(tripId, userId);
+        // Devuelve el primer resultado o null si no existe
+        const userRequest = requests.length > 0 ? requests[0] : null;
+        res.json(userRequest);
+    } catch (error) {
+        console.error('Error fetching user request:', error);
+        res.status(500).json({ error: 'Error al obtener tu solicitud' });
     }
 };
