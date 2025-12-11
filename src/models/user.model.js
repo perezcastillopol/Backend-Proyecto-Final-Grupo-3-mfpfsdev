@@ -85,3 +85,12 @@ export const update = async (
     throw error;
   }
 };
+
+
+/***********************************************************DELETE****************************************/
+
+export const deleteUserById = async (userId) => {
+  const [result] = await db.query('DELETE FROM users WHERE id = ?', [userId]);
+  console.log(result)
+  return result;
+};

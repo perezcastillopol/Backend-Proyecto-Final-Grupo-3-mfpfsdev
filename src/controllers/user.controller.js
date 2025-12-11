@@ -4,7 +4,8 @@ import {
   insertModalityUser,
   selectAllUsers,
   selectUserById,
-  update
+  update,
+  deleteUserById,
 } from '../models/user.model.js';
 
 /***********************************************************GET****************************************/
@@ -39,4 +40,17 @@ export const updateUser = async (req, res) => {
   const mods = await getModalitiesByUser(userId);
   result.interests = mods;
   res.json(result);
+};
+
+/***********************************************************DELETE****************************************/
+
+export const deleteUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    await deleteUserById(userId);
+    res.status(200).json({ message: 'Usuario eliminado correctamente' });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Error eliminando usuario' });
+  }
 };
