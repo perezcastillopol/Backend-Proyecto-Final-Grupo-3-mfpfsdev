@@ -1,14 +1,14 @@
-import db from '../../config/db.js';
+import db from "../../config/db.js";
 
 /***********************************************************GET****************************************/
 
 export const selectAllUsers = async () => {
-  const [result] = await db.query('select * from users');
+  const [result] = await db.query("SELECT * FROM users");
   return result;
 };
 
 export const selectUserById = async (userId) => {
-  const [result] = await db.query('select * from users where id = ?', [userId]);
+  const [result] = await db.query("SELECT * FROM users WHERE id = ?", [userId]);
   if (result.length === 0) return null;
   return result[0];
 };
@@ -17,7 +17,7 @@ export const selectUserById = async (userId) => {
  * Buscar usuario por email (para login)
  */
 export const selectUserByEmail = async (email) => {
-  const [result] = await db.query('select * from users where email = ?', [email]);
+  const [result] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
   if (result.length === 0) return null;
   return result[0];
 };
@@ -30,15 +30,27 @@ export const insertUser = async ({
   password_hash,
   photo_url,
   bio,
-  interests,
-  birthDate, 
-  phone, 
-  location
+  birthDate,
+  phone,
+  location,
 }) => {
-  const [result] = await db.query(
-    'insert into users (name, email, password_hash, photo_url, bio, interests, birthDate, phone, location) values (?,?,?,?,?,?,?,?,?)',
-    [name, email, password_hash, photo_url, bio, interests,birthDate, phone, location]
-  );
+  const sql = `
+    INSERT INTO users (name, email, password_hash, photo_url, bio, birthDate, phone, location)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  const values = [
+    name,
+    email,
+    password_hash,
+    photo_url,
+    bio,
+    birthDate,
+    phone,
+    location,
+  ];
+
+  const [result] = await db.query(sql, values);
   return result;
 };
 
@@ -46,11 +58,26 @@ export const insertUser = async ({
 
 export const update = async (
   userId,
-  { name, email, password_hash, photo_url, bio, interests, birthDate, phone, location}
+  { name, email, password_hash, photo_url, bio, birthDate, phone, location }
 ) => {
-  const [result] = await db.query(
-    'update users set name = ?, email = ?, password_hash = ?, photo_url = ?, bio = ?, interests = ?,  birthDate = ?, phone = ?, location = ? where id = ?',
-    [name, email, password_hash, photo_url, bio, interests, userId, birthDate, phone, location]
-  );
+  const sql = `
+    UPDATE users
+    SET name = ?, email = ?, password_hash = ?, photo_url = ?, bio = ?, birthDate = ?, phone = ?, location = ?
+    WHERE id = ?
+  `;
+
+  const values = [
+    name,
+    email,
+    password_hash,
+    photo_url,
+    bio,
+    birthDate,
+    phone,
+    location,
+    userId,
+  ];
+
+  const [result] = await db.query(sql, values);
   return result;
 };

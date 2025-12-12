@@ -7,6 +7,8 @@ import {
 } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { enviarAvisoCambioViaje } from "../services/emailService.js";
+
 
 /***********************************************************GET****************************************/
 
@@ -23,9 +25,43 @@ export const getUserById = async (req, res) => {
 /***********************************************************INSERT*************************************/
 
 export const createUser = async (req, res) => {
-  const { insertId } = await insertUser(req.body);
-  const result = await selectUserById(insertId);
-  res.json(result);
+  try {
+    const { name, email, password, photo_url, bio, birthDate, phone, location } = req.body;
+
+    if (!email || !password || !name) {
+      return res.status(400).json({ message: "name, email y password son obligatorios" });
+    }
+
+    // Evitar duplicados
+    const existing = await selectUserByEmail(email);
+    if (existing) {
+      return res.status(409).json({ message: "El email ya está registrado" });
+    }
+
+    const rounds = Number(process.env.BCRYPT_ROUNDS) || 10;
+    const password_hash = await bcrypt.hash(password, rounds);
+
+    const { insertId } = await insertUser({
+      name,
+      email,
+      password_hash,
+      photo_url,
+      bio,
+      birthDate,
+      phone,
+      location,
+    });
+
+    const result = await selectUserById(insertId);
+
+    // no enviar el hash de vuelta
+    const { password_hash: _ph, ...userWithoutPassword } = result;
+
+    return res.status(201).json(userWithoutPassword);
+  } catch (error) {
+    console.error("Error en createUser:", error);
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 /***********************************************************UPDATE****************************************/
@@ -88,4 +124,14 @@ export const loginUser = async (req, res) => {
     console.error('Error en loginUser:', error);
     return res.status(500).json({ message: 'Error en el servidor' });
   }
+};
+
+export const sendNotification = async (req, res) => {
+  await enviarAvisoCambioViaje(
+    "marleneptb555@yahoo.com",
+    "Notificación de TripBud",
+    "Este es un mensaje automático de TripBud para informarte sobre una actualización. No es necesario responder a este correo."
+  );
+
+  res.json({ message: "Notificación enviada correctamente" });
 };

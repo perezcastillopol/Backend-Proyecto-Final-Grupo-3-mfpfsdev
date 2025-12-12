@@ -1,28 +1,25 @@
-import { Router } from 'express';
-import {
-  createUser,
-  getAllUsers,
-  getUserById,
-  updateUser,
-  loginUser,
-} from '../../controllers/user.controller.js';
-import { checkIdUser } from '../../middlewares/users.middlewares.js';
+import { Router } from "express";
+import * as userController from "../../controllers/user.controller.js";
+import { checkIdUser } from "../../middlewares/users.middlewares.js";
 
 const router = Router();
 
 // Listar usuarios
-router.get('/', getAllUsers);
+router.get("/", userController.getAllUsers);
 
-// LOGIN (antes de :userId para que no lo confunda con un id)
-router.post('/login', loginUser);
+// LOGIN
+router.post("/login", userController.loginUser);
+
+// Enviar notificación
+router.post("/notify", userController.sendNotification);
 
 // Obtener usuario por id
-router.get('/:userId', checkIdUser, getUserById);
+router.get("/:userId", checkIdUser, userController.getUserById);
 
 // Crear usuario
-router.post('/', createUser);
+router.post("/", userController.createUser);
 
 // Actualizar usuario
-router.put('/:userId', checkIdUser, updateUser);
+router.put("/:userId", checkIdUser, userController.updateUser);
 
 export default router;

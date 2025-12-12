@@ -6,21 +6,17 @@ export async function enviarAvisoCambioViaje(destinatarios, asunto, mensaje) {
     service: "gmail",
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      pass: process.env.EMAIL_PASS, 
     },
   });
 
   const mailOptions = {
-    from: `"TripBud" <${process.env.EMAIL_USER}>`,
+    from: `"TripBud Notifications" <${process.env.EMAIL_USER}>`,
     to: destinatarios,
     subject: asunto,
     text: mensaje,
   };
 
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log("Email enviado a:", destinatarios);
-  } catch (error) {
-    console.error("Error enviando email:", error);
-  }
+  await transporter.sendMail(mailOptions);
+  console.log(" Email enviado a:", destinatarios);
 }

@@ -92,8 +92,6 @@ export const getTripsByModality = async (req, res) => {
 // ========================
 export const getFiltredTrips = async (req, res) => {
   try {
-    // Si lo necesitáis para debug, se puede dejar comentado:
-    // console.log("BODY FILTER ===>", req.body);
     const result = await selectFilterTrips(req.body);
     return res.json(result);
   } catch (error) {
@@ -189,17 +187,16 @@ export const updateTrip = async (req, res) => {
     const viajeCancelado =
       oldStatus !== newStatus && newStatus === "closed";
 
-    // ==== C) Enviar SOLO UN email ====
+    // ==== C) Enviar un email ====
 
     if (viajeCancelado) {
       // 1ª prioridad: viaje cancelado
-      const destinatario =
-        process.env.EMAIL_USER || "tripbudnotifications@gmail.com";
+      const destinatario = "marleneptb555@yahoo.com";
 
       const nombreViaje =
         tripAfter.title || `Trip ${tripAfter.id || tripId}`;
 
-      const asunto = "Tu viaje ha sido cancelado";
+      const asunto = "TripBud - Tu viaje ha sido cancelado";
 
       const mensaje = `Hola,
 
@@ -219,13 +216,12 @@ Equipo TripBud.
       console.log("Email de CANCELACIÓN enviado");
     } else if (fechasCambiaron) {
       // 2ª prioridad: solo cambio de fechas
-      const destinatario =
-        process.env.EMAIL_USER || "tripbudnotifications@gmail.com";
+      const destinatario = "marleneptb555@yahoo.com";
 
       const nombreViaje =
         tripAfter.title || `Trip ${tripAfter.id || tripId}`;
 
-      const asunto = "Se han actualizado las fechas de tu viaje";
+      const asunto = "TripBud - Se han actualizado las fechas de tu viaje";
 
       const mensaje = `Hola,
 
