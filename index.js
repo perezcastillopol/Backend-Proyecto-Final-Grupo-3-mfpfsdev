@@ -3,6 +3,9 @@ import http from 'node:http';
 import app from './src/app.js';
 import dotenv from 'dotenv';
 
+dotenv.config();
+
+
 // Config .env
 dotenv.config();
 
