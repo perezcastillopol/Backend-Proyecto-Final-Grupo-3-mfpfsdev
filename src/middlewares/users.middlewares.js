@@ -16,8 +16,8 @@ export const checkIdUser = async (req, res, next) => {
 export const getNickName = async (req, res, next) => {
     let { name, last_name } = req.body;
 
-    if (name) name = name.trim().toLowerCase();
-    if (last_name) last_name = last_name.trim().toLowerCase();
+    if (name) name = name.trim().toLowerCase().replace(/\s+/g, '');
+    if (last_name) last_name = last_name.trim().toLowerCase().replace(/\s+/g, '');
 
     let nickname = "";
 
