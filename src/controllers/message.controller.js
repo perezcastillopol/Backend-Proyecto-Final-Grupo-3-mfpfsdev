@@ -3,7 +3,7 @@ import { insertMsg, selectMsgByTrip, selectMsgById } from '../models/message.mod
 export const getAllMessageByTrip = async (req, res) => {
   const {tripId} = req.params;
   const msgs = await selectMsgByTrip(tripId);
-  if (msgs.length === 0) {
+  if (!msgs || msgs.length === 0) {
     return res.status(404).json({message: 'No messages found for this trip'});
   }
   res.json(msgs);
