@@ -181,3 +181,5 @@ const destinatario = email_del_usuario;
 
 ## Conclusion 
 Esta implementación permite validar de forma clara y segura la lógica de notificaciones sin depender de datos reales de usuarios, facilitando pruebas, mantenimiento y futuras mejoras.
+
+<-- Minor update for PR refresh -->
