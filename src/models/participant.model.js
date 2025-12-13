@@ -23,3 +23,8 @@ export const selectAcceptedParticipantsByTrip = async (tripId) => {
     );
     return rows;
 }
+
+export const isParticipantOfTrip = async (tripId, userId) => {
+    const [result] = await db.query ('select exists(select 1 from participants where trip_id = ? and user_id = ?) as is_participant',[tripId, userId]);
+    return result;
+}
