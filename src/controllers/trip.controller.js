@@ -39,12 +39,22 @@ export const getFiltredTrips = async (req, res) =>{
 
 
 
-export const createTrip = async(req, res) =>{
-  const {insertId} = await insertTrip (req.body);
-  const result = await selectTripById (insertId);
-  res.json(result)
+export const createTrip = async (req, res) => {
+  try {
+    const payload = {
+      ...req.body,
+      creator_id: req.userId,                 // ensure creator matches authenticated user
+      num_participants: req.body.num_participants ?? 0,
+    };
 
-}
+    const { insertId } = await insertTrip(payload);
+    const result = await selectTripById(insertId);
+    res.json(result);
+  } catch (err) {
+    console.error('Error creating trip:', err);
+    res.status(500).json({ message: 'Error creating trip' });
+  }
+};
 
 export const removeTrip = async (req, res)=>{
   const {tripId} = req.params;
