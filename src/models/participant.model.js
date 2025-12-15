@@ -28,3 +28,11 @@ export const isParticipantOfTrip = async (tripId, userId) => {
     const [result] = await db.query ('select exists(select 1 from participants where trip_id = ? and user_id = ?) as is_participant',[tripId, userId]);
     return result;
 }
+
+export const addParticipantToTrip = async (tripId, userId) => {
+    const [result] = await db.query(
+        'INSERT INTO participants (trip_id, user_id, accepted_at) VALUES (?, ?, NOW())',
+        [tripId, userId]
+    );
+    return result;
+}

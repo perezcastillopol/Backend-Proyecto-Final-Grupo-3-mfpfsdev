@@ -1,4 +1,5 @@
 import { selectAllTrips, selectTripById, insertTrip, deleteById, update, selectTripsByUserId, selectTripsByModality, selectFilterTrips} from '../models/trip.model.js';
+import {addParticipantToTrip} from "../models/participant.model.js";
 
 
 export const getAllTrips = async (req, res) => {
@@ -49,6 +50,7 @@ export const createTrip = async (req, res) => {
 
     const { insertId } = await insertTrip(payload);
     const result = await selectTripById(insertId);
+    await addParticipantToTrip(result.id, req.userId)
     res.json(result);
   } catch (err) {
     console.error('Error creating trip:', err);

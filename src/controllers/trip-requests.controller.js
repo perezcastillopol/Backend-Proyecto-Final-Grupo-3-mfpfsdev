@@ -1,4 +1,5 @@
 import * as TripRequest from '../models/trip-requests.model.js';
+import {addParticipantToTrip} from "../models/participant.model.js";
 
 export const createRequest = async (req, res) => {
     const { tripId } = req.params;
@@ -55,6 +56,9 @@ export const respondToRequest = async (req, res) => {
         }
         // Actualiza la solicitud
         const updated = await TripRequest.updateStatus(requestId, status, responderId);
+        if (status === 'accepted') {
+            await addParticipantToTrip(tripId, request.user_id);
+        }
         res.json(updated);
     } catch (error) {
         console.error('Error responding to request:', error);
