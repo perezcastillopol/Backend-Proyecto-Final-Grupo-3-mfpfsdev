@@ -61,6 +61,9 @@ export const createTrip = async (req, res) => {
 export const removeTrip = async (req, res)=>{
   const {tripId} = req.params;
   const result = await selectTripById(tripId);
+  if (req.userId !== result.creator_id) {
+    res.status(404).json({message: 'Yor are not the creator of the trip'});
+  }
   await deleteById (tripId);
   res.json({message: 'Deleted trip', result});
 }
@@ -68,6 +71,9 @@ export const removeTrip = async (req, res)=>{
 export const updateTrip = async (req, res) =>{
   const {tripId} = req.params;
   await update(tripId, req.body);
+  if (req.userId !== result.creator_id) {
+    res.status(404).json({message: 'Yor are not the creator of the trip'});
+  }
   const result = await selectTripById(tripId);
   res.json(result);
 }
