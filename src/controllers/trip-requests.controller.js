@@ -86,3 +86,14 @@ export const getMyRequest = async (req, res) => {
         res.status(500).json({ error: 'Error al obtener tu solicitud' });
     }
 };
+
+export const getAcceptedRequests = async (req, res) => {
+    const { tripId } = req.params;
+    try {
+        const acceptedRequests = await TripRequest.getAcceptedByTripId(tripId);
+        res.json(acceptedRequests);
+    } catch (error) {
+        console.error('Error fetching accepted requests:', error);
+        res.status(500).json({ error: 'Error al obtener las solicitudes aceptadas' });
+    }
+};

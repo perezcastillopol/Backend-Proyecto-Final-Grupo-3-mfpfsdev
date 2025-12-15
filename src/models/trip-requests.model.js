@@ -38,7 +38,16 @@ export const findByIdAndTrip = async (id, tripId) => {
 
 export const findByTripId = async (tripId) => {
     const [rows] = await db.query(
-        'SELECT * FROM trip_requests WHERE trip_id = ? ORDER BY requested_at DESC',
+        `SELECT
+            tr.*,
+            u.id as user_id,
+            CONCAT_WS(' ', u.name, u.last_name) AS user_name,
+            u.email as user_email,
+            u.photo_url as user_photo_url
+         FROM trip_requests tr
+         JOIN users u ON u.id = tr.user_id
+         WHERE tr.trip_id = ?
+         ORDER BY tr.requested_at DESC`,
         [tripId]
     );
     return rows;
@@ -58,7 +67,24 @@ export const getHistory = async (tripId) => {
 
 export const getPendingByTripId = async (tripId) => {
     const [rows] = await db.query(
-        'SELECT * FROM trip_requests WHERE trip_id = ? AND status = "pending" ORDER BY requested_at DESC',
+        'SELECT * FROM trip_requests WHERE trip_id = ? AND status = \'pending\' ORDER BY requested_at DESC',
+        [tripId]
+    );
+    return rows;
+};
+
+export const getAcceptedByTripId = async (tripId) => {
+    const [rows] = await db.query(
+        `SELECT
+            tr.*,
+            u.id as user_id,
+            CONCAT_WS(' ', u.name, u.last_name) AS user_name,
+            u.email as user_email,
+            u.photo_url as user_photo_url
+         FROM trip_requests tr
+         JOIN users u ON u.id = tr.user_id
+         WHERE tr.trip_id = ? AND tr.status = 'accepted'
+         ORDER BY tr.responded_at DESC`,
         [tripId]
     );
     return rows;

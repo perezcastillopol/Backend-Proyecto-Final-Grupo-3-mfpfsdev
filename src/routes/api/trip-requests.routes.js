@@ -1,11 +1,14 @@
 import express from 'express';
-import { createRequest,getRequests,respondToRequest,getRequestHistory,getMyRequest } from '../../controllers/trip-requests.controller.js';
+import { createRequest,getRequests,respondToRequest,getRequestHistory,getMyRequest,getAcceptedRequests } from '../../controllers/trip-requests.controller.js';
 import {authenticate} from "../../middlewares/auth.middlewares.js";
 
 const router = express.Router();
 
 // Ver historial de solicitudes (debe ir antes de /:tripId para evitar conflictos)
 router.get('/:tripId/history', getRequestHistory);
+
+// Ver solicitudes aceptadas para un viaje (debe ir antes de /:tripId)
+router.get('/:tripId/accepted', getAcceptedRequests);
 
 // Ver mi propia solicitud para un viaje (debe ir antes de /:tripId)
 router.get('/:tripId/my-request', authenticate, getMyRequest);
